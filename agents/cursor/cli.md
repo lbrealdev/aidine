@@ -1,6 +1,6 @@
 # Cursor CLI (`agent` / `cursor-agent`)
 
-Terminal agent. Same account and models as the editor. Separate install from desktop.
+The same agent as desktop, in the terminal. Separate install.
 
 Sources: [cursor.com/cli](https://cursor.com/cli), [install docs](https://cursor.com/docs/cli/installation).
 

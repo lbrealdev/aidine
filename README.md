@@ -8,6 +8,8 @@ The name is iodine with `io` swapped for `ai`. In the verse this comes from, iod
 
 Not a wiki of every tool. Not `the-guide`. Not a `0k-*`.
 
+[Working on this repo](CONTRIBUTING.md): issue, branch, PR. Nothing straight onto `main`.
+
 ## Map
 
 - [Agents](agents/README.md) — Cursor, OpenCode, Goose, Hermes, Claude Code

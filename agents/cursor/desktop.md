@@ -1,10 +1,26 @@
 # Cursor desktop
 
-The graphical editor. Linux notes below; macOS and Windows installers live on [cursor.com/download](https://cursor.com/download).
+The local agent, with an IDE attached.
 
-Desktop is not the agent CLI. Installing `.deb` / APT does not give you `cursor-agent`.
+Linux notes below; macOS and Windows installers live on [cursor.com/download](https://cursor.com/download).
+
+Installing desktop does not install the [CLI](cli.md). `cursor` ≠ `cursor-agent`.
 
 Checked 2026-08-21. Latest on the download page was **3.17**.
+
+## What you actually open
+
+Cursor's own split:
+
+| Surface | Role |
+|---|---|
+| **Agents Window** | Agent-first UI. Parallel agents, local / cloud / SSH. [docs](https://cursor.com/docs/agent/agents-window) |
+| **IDE** | Classic editor (VS Code-shaped): files, extensions, splits. Command palette → **Open IDE** |
+| **Tab** | Inline completions on the editor. Not the agent loop. IDE-only — cloud agents do not run Tab. [help](https://cursor.com/help/ai-features/tab) |
+
+You can keep both open. Command palette → **Open Agents Window** if you are in the IDE.
+
+Agent (Cmd/Ctrl-I in the editor, or the Agents Window) is the tool loop: search, edit, shell. Tab is the next-edit guess while you type.
 
 ## Pin a Linux `.deb` (golden track)
 
@@ -69,3 +85,4 @@ Portable. No desktop integration, no `cursor` on `PATH` unless you wrap it. Need
 - Pinning `3.10` is a **minor track**, not a file. Re-run wget and you may get a newer 3.10.x.
 - A `.deb` install can register an APT source that then breaks `apt update` if the GPG key is missing. Import `https://downloads.cursor.com/keys/anysphere.asc` or switch to the official repo commands above.
 - AppImage is the fallback, not the Linux default anymore.
+- Tab lives on the IDE surface. If you only live in the Agents Window, you will not see it.
