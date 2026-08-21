@@ -1,6 +1,6 @@
 # Agents
 
-How each harness is installed, how it is actually used, and the traps.
+How each harness is installed and how it is actually used.
 
 ## In this section
 
