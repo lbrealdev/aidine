@@ -1,43 +1,30 @@
 # Cursor desktop
 
-The graphical editor. Linux notes below; macOS and Windows installers live on [cursor.com/download](https://cursor.com/download).
+The local agent, with an IDE attached.
 
-Desktop is not the agent CLI. Installing `.deb` / APT does not give you `cursor-agent`.
+Linux notes below. macOS and Windows: [cursor.com/download](https://cursor.com/download).
 
-Checked 2026-08-21. Latest on the download page was **3.17**.
+This package is `cursor`. It is not the [CLI](cli.md) (`agent` / `cursor-agent`).
 
-## Pin a Linux `.deb` (golden track)
+## What you actually open
 
-Cursor's update API serves the current patch on a minor track. The `3.10` URL does not freeze `3.10.17`; it follows the latest 3.10.x.
+| Surface | Role |
+|---|---|
+| Agents Window | Agent UI. Parallel agents, local / cloud / SSH. [docs](https://cursor.com/docs/agent/agents-window) |
+| IDE | Files, extensions, splits. Command palette → Open IDE |
+| Tab | Inline completions in the editor. Not the agent loop. You only see it in the IDE. [help](https://cursor.com/help/ai-features/tab) |
 
-```shell
-# 3.10 track → currently cursor_3.10.20_amd64.deb
-wget https://api2.cursor.sh/updates/download/golden/linux-x64-deb/cursor/3.10 \
-  -qO cursor_linux_amd64.deb
+You can keep Agents Window and the IDE open together. From the IDE, command palette → Open Agents Window.
 
-# latest track (3.17 → currently cursor_3.17.8_amd64.deb)
-wget https://api2.cursor.sh/updates/download/golden/linux-x64-deb/cursor/3.17 \
-  -qO cursor_linux_amd64.deb
+Agent (Ctrl-I / Cmd-I in the editor, or the Agents Window) is the tool loop: search, edit, shell. Tab is the next-edit guess while you type.
 
-sudo dpkg -i cursor_linux_amd64.deb
-sudo apt-get install -f
-```
+## Linux
 
-Verify:
+Current release is 3.17. APT follows that. A one-off `.deb` works too.
 
-```shell
-which cursor
-dpkg-query -W cursor
-cursor --version
-```
+### APT (Debian / Ubuntu)
 
-ARM64: swap `linux-x64-deb` for `linux-arm64-deb`.
-
-On first launch the package may add Cursor's APT repo so later upgrades go through `apt`. If `apt update` then fails on signatures, import the key (see below) or use the official repo install instead of a one-off `.deb`.
-
-## APT (Debian / Ubuntu)
-
-From [Cursor's quickstart](https://cursor.com/docs/get-started/quickstart). Preferred if you want desktop icons and package updates.
+From [Cursor's quickstart](https://cursor.com/docs/get-started/quickstart):
 
 ```shell
 curl -fsSL https://downloads.cursor.com/keys/anysphere.asc \
@@ -51,21 +38,33 @@ sudo apt update
 sudo apt install cursor
 ```
 
-RHEL / Fedora: `https://downloads.cursor.com/yumrepo` — same quickstart page.
+RHEL / Fedora: `https://downloads.cursor.com/yumrepo`, same page.
 
-## AppImage
+### Direct `.deb`
 
-From [cursor.com/download](https://cursor.com/download) (or [cursor.com/downloads](https://cursor.com/downloads)):
+```shell
+wget https://api2.cursor.sh/updates/download/golden/linux-x64-deb/cursor/3.17 \
+  -qO cursor_linux_amd64.deb
+
+sudo dpkg -i cursor_linux_amd64.deb
+sudo apt-get install -f
+```
+
+ARM64: `linux-arm64-deb` in the URL.
+
+```shell
+which cursor
+dpkg-query -W cursor
+cursor --version
+```
+
+### AppImage
+
+From [cursor.com/download](https://cursor.com/download):
 
 ```shell
 chmod +x Cursor-*.AppImage
 ./Cursor-*.AppImage
 ```
 
-Portable. No desktop integration, no `cursor` on `PATH` unless you wrap it. Needs FUSE on some distros (`libfuse2` on Debian/Ubuntu).
-
-## Traps
-
-- Pinning `3.10` is a **minor track**, not a file. Re-run wget and you may get a newer 3.10.x.
-- A `.deb` install can register an APT source that then breaks `apt update` if the GPG key is missing. Import `https://downloads.cursor.com/keys/anysphere.asc` or switch to the official repo commands above.
-- AppImage is the fallback, not the Linux default anymore.
+Portable. No menu icon, and no `cursor` on PATH unless you wrap it. Some Debian/Ubuntu setups need `libfuse2`.

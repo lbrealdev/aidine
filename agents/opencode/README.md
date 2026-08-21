@@ -1,5 +1,9 @@
 # OpenCode
 
-Notes as they land: install, how it is actually used, traps.
+Harness: [opencode.ai](https://opencode.ai/), [github.com/sst/opencode](https://github.com/sst/opencode).
 
-Cursor models inside OpenCode: [../cursor/opencode.md](../cursor/opencode.md).
+Install and usage notes as they land.
+
+## Plugins
+
+- [open-cursor](open-cursor.md) — Cursor models inside OpenCode, via `cursor-agent` ([docs](https://nomadcxx.github.io/opencode-cursor/docs/))

@@ -1,6 +1,6 @@
 # Cursor CLI (`agent` / `cursor-agent`)
 
-Terminal agent. Same account and models as the editor. Separate install from desktop.
+The same agent as desktop, in the terminal. Separate install.
 
 Sources: [cursor.com/cli](https://cursor.com/cli), [install docs](https://cursor.com/docs/cli/installation).
 
@@ -12,22 +12,24 @@ macOS, Linux, WSL:
 curl https://cursor.com/install -fsS | bash
 ```
 
+That is the official installer. Read `https://cursor.com/install` first if you want to see the script.
+
 Windows (native PowerShell):
 
 ```powershell
 irm 'https://cursor.com/install?win32=true' | iex
 ```
 
-The script drops a versioned bundle under `~/.local/share/cursor-agent/versions/` and symlinks:
+The script puts a versioned bundle under `~/.local/share/cursor-agent/versions/` and creates:
 
 ```
 ~/.local/bin/agent
 ~/.local/bin/cursor-agent
 ```
 
-Official docs use `agent`. Plugins (OpenCode) look for `cursor-agent`. Both names are the same binary.
+Docs use `agent`. The [open-cursor](../opencode/open-cursor.md) plugin looks for `cursor-agent`. Same binary.
 
-If `command not found`:
+If the shell says `command not found`, `~/.local/bin` is not on PATH:
 
 ```shell
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
@@ -35,6 +37,8 @@ source ~/.bashrc
 ```
 
 zsh: same line in `~/.zshrc`.
+
+You can run this on a machine that has no desktop app.
 
 ## Auth and check
 
@@ -66,17 +70,8 @@ agent -p --output-format json "review the last commit"
 
 Without `--force`, print mode proposes and does not write.
 
-Update:
-
 ```shell
 agent update
 ```
 
 Auto-update is on by default.
-
-## Traps
-
-- Desktop install ≠ CLI. You can run `cursor-agent` on a machine with no editor.
-- `origin` is not this CLI. Origin is Cursor's git host (`curl -fsSL https://downloads.cursor.com/origin/install.sh | sh`).
-- Piping `curl | bash` is the official path. Read `https://cursor.com/install` first if you want to see what it does.
-- `~/.local/bin` missing from `PATH` is the usual "installed but not found".
