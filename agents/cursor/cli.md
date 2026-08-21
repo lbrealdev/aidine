@@ -27,7 +27,7 @@ The script puts a versioned bundle under `~/.local/share/cursor-agent/versions/`
 ~/.local/bin/cursor-agent
 ```
 
-Docs use `agent`. OpenCode plugins look for `cursor-agent`. Same binary.
+Docs use `agent`. The [open-cursor](../opencode/open-cursor.md) plugin looks for `cursor-agent`. Same binary.
 
 If the shell says `command not found`, `~/.local/bin` is not on PATH:
 
