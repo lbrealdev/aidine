@@ -2,29 +2,27 @@
 
 The local agent, with an IDE attached.
 
-Linux notes below; macOS and Windows installers live on [cursor.com/download](https://cursor.com/download).
+Linux notes below. macOS and Windows installers: [cursor.com/download](https://cursor.com/download).
 
-Installing desktop does not install the [CLI](cli.md). `cursor` ≠ `cursor-agent`.
+This package is `cursor`. It is not the [CLI](cli.md) (`agent` / `cursor-agent`).
 
-Checked 2026-08-21. Latest on the download page was **3.17**.
+Checked 2026-08-21. Latest on the download page was 3.17.
 
 ## What you actually open
 
-Cursor's own split:
-
 | Surface | Role |
 |---|---|
-| **Agents Window** | Agent-first UI. Parallel agents, local / cloud / SSH. [docs](https://cursor.com/docs/agent/agents-window) |
-| **IDE** | Classic editor (VS Code-shaped): files, extensions, splits. Command palette → **Open IDE** |
-| **Tab** | Inline completions on the editor. Not the agent loop. IDE-only — cloud agents do not run Tab. [help](https://cursor.com/help/ai-features/tab) |
+| Agents Window | Agent UI. Parallel agents, local / cloud / SSH. [docs](https://cursor.com/docs/agent/agents-window) |
+| IDE | Files, extensions, splits. Command palette → Open IDE |
+| Tab | Inline completions in the editor. Not the agent loop. Cloud agents do not run Tab. [help](https://cursor.com/help/ai-features/tab) |
 
-You can keep both open. Command palette → **Open Agents Window** if you are in the IDE.
+You can keep Agents Window and the IDE open together. From the IDE, command palette → Open Agents Window.
 
-Agent (Cmd/Ctrl-I in the editor, or the Agents Window) is the tool loop: search, edit, shell. Tab is the next-edit guess while you type.
+Agent (Ctrl-I / Cmd-I in the editor, or the Agents Window) is the tool loop: search, edit, shell. Tab is the next-edit guess while you type. Stay in Agents Window only and you will not see Tab.
 
 ## Pin a Linux `.deb` (golden track)
 
-Cursor's update API serves the current patch on a minor track. The `3.10` URL does not freeze `3.10.17`; it follows the latest 3.10.x.
+The update API gives the current patch on a minor track. `.../cursor/3.10` is not frozen at 3.10.17; it follows the latest 3.10.x.
 
 ```shell
 # 3.10 track → currently cursor_3.10.20_amd64.deb
@@ -39,8 +37,6 @@ sudo dpkg -i cursor_linux_amd64.deb
 sudo apt-get install -f
 ```
 
-Verify:
-
 ```shell
 which cursor
 dpkg-query -W cursor
@@ -49,11 +45,11 @@ cursor --version
 
 ARM64: swap `linux-x64-deb` for `linux-arm64-deb`.
 
-On first launch the package may add Cursor's APT repo so later upgrades go through `apt`. If `apt update` then fails on signatures, import the key (see below) or use the official repo install instead of a one-off `.deb`.
+On first launch the package may add Cursor's APT repo. If `apt update` then fails on signatures, import the key used in the APT section below, or install from that repo instead of a one-off `.deb`.
 
 ## APT (Debian / Ubuntu)
 
-From [Cursor's quickstart](https://cursor.com/docs/get-started/quickstart). Preferred if you want desktop icons and package updates.
+From [Cursor's quickstart](https://cursor.com/docs/get-started/quickstart). Use this if you want desktop icons and `apt` upgrades.
 
 ```shell
 curl -fsSL https://downloads.cursor.com/keys/anysphere.asc \
@@ -67,22 +63,15 @@ sudo apt update
 sudo apt install cursor
 ```
 
-RHEL / Fedora: `https://downloads.cursor.com/yumrepo` — same quickstart page.
+RHEL / Fedora: `https://downloads.cursor.com/yumrepo`, same quickstart page.
 
 ## AppImage
 
-From [cursor.com/download](https://cursor.com/download) (or [cursor.com/downloads](https://cursor.com/downloads)):
+From [cursor.com/download](https://cursor.com/download):
 
 ```shell
 chmod +x Cursor-*.AppImage
 ./Cursor-*.AppImage
 ```
 
-Portable. No desktop integration, no `cursor` on `PATH` unless you wrap it. Needs FUSE on some distros (`libfuse2` on Debian/Ubuntu).
-
-## Traps
-
-- Pinning `3.10` is a **minor track**, not a file. Re-run wget and you may get a newer 3.10.x.
-- A `.deb` install can register an APT source that then breaks `apt update` if the GPG key is missing. Import `https://downloads.cursor.com/keys/anysphere.asc` or switch to the official repo commands above.
-- AppImage is the fallback, not the Linux default anymore.
-- Tab lives on the IDE surface. If you only live in the Agents Window, you will not see it.
+Portable. No menu icon, and no `cursor` on PATH unless you wrap it. Some Debian/Ubuntu setups need `libfuse2`.

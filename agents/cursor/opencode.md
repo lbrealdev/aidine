@@ -1,10 +1,10 @@
 # Cursor via OpenCode
 
-Run Cursor subscription models inside OpenCode. Not an official Cursor product.
+Cursor models inside OpenCode, through your Cursor login. Community plugin, not Cursor.
 
-Path used here: [`@rama_nigg/open-cursor`](https://www.npmjs.com/package/@rama_nigg/open-cursor) ([docs](https://nomadcxx.github.io/opencode-cursor/docs/getting-started/installation/), [repo](https://github.com/Nomadcxx/opencode-cursor)).
+Path used here: [`@rama_nigg/open-cursor`](https://www.npmjs.com/package/@rama_nigg/open-cursor) ([docs](https://nomadcxx.github.io/opencode-cursor/docs/getting-started/installation/), [repo](https://github.com/Nomadcxx/opencode-cursor)). Other OpenCode↔Cursor bridges exist. This page is this plugin.
 
-You need OpenCode, a Cursor login, and `cursor-agent` on `PATH`. See [CLI](cli.md).
+You need OpenCode, a Cursor login, and `cursor-agent` on PATH. See [CLI](cli.md).
 
 ```shell
 opencode --version
@@ -18,9 +18,7 @@ npm install -g @rama_nigg/open-cursor
 open-cursor install
 ```
 
-That writes the `cursor-acp` provider into `~/.config/opencode/opencode.json`, installs the plugin, and discovers models from `cursor-agent`. It backs up the existing config unless you pass `--no-backup`. It does not touch `.cursor` unless you ask (`--install-cursor-bridge`).
-
-Auth is owned by the CLI:
+That writes the `cursor-acp` provider into `~/.config/opencode/opencode.json`, installs the plugin, and reads models from `cursor-agent`. It backs up the existing config unless you pass `--no-backup`. It leaves `.cursor` alone unless you pass `--install-cursor-bridge`.
 
 ```shell
 cursor-agent login
@@ -28,17 +26,21 @@ cursor-agent models
 opencode models | grep cursor-acp
 ```
 
-The last command should at least list `cursor-acp/auto`.
+The last command should list `cursor-acp/auto`. If it prints nothing: login again, then `open-cursor install` and `open-cursor sync-models`. The desktop model list and the CLI model list are not the same.
+
+Quota errors come from Cursor. Diagnose with `open-cursor doctor --deep`.
+
+Do not put API keys in this repo.
 
 ## What it does
 
-OpenCode talks OpenAI-compatible HTTP. `cursor-agent` talks a process/stream protocol. The plugin starts a local proxy that translates:
+OpenCode speaks OpenAI-compatible HTTP. `cursor-agent` speaks a process/stream protocol. The plugin runs a local proxy:
 
 ```
 OpenCode  →  http://127.0.0.1:32124/v1  →  cursor-agent  →  Cursor API
 ```
 
-Check the proxy:
+32124 is the default. If something else owns the port, stop it or pass `--base-url` to `open-cursor install`.
 
 ```shell
 lsof -i :32124
@@ -54,19 +56,15 @@ opencode run "Summarise this repository in five bullets." \
 
 Or start `opencode` and pick a `cursor-acp/*` model.
 
-Refresh the model list after Cursor changes what the account can see:
-
 ```shell
 open-cursor sync-models
 ```
-
-Upgrade:
 
 ```shell
 npm update -g @rama_nigg/open-cursor
 ```
 
-Then restart OpenCode. The running plugin does not replace itself.
+Restart OpenCode after an upgrade. The running plugin does not replace itself.
 
 ## Manual config (if you skip the installer)
 
@@ -89,13 +87,3 @@ Then restart OpenCode. The running plugin does not replace itself.
   }
 }
 ```
-
-## Traps
-
-- Community plugin. Other OpenCode↔Cursor bridges exist (`opencode-cursor-auth`, OAuth plugins, etc.). They are not this page.
-- Port **32124** is the default. If something else owns it, stop that process or pass `--base-url` to `open-cursor install`.
-- `opencode models | grep cursor-acp` empty: `cursor-agent login`, then `open-cursor install` and `open-cursor sync-models`. Desktop model list ≠ CLI model list.
-- Quota errors come from Cursor, not from the plugin.
-- Diagnose with `open-cursor doctor --deep`.
-
-Do not put API keys in this repo.
