@@ -2,9 +2,7 @@
 
 `(AY-deen)`
 
-Notes on coding agents, LLMs, MCP, and models.
-
-The name is iodine with `io` swapped for `ai`.
+Notes on coding agents, LLMs, and MCP.
 
 ## Contents
 
@@ -28,10 +26,6 @@ The name is iodine with `io` swapped for `ai`.
 ### MCP
 
 - [MCP](mcp/README.md)
-
-### Models
-
-- [Models](models/README.md)
 
 ## Working
 
