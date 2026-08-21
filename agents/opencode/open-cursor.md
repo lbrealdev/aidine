@@ -10,7 +10,7 @@ OpenCode  →  http://127.0.0.1:32124/v1  →  cursor-agent  →  Cursor API
 
 You need OpenCode, a Cursor login, and `cursor-agent` on PATH. CLI install: [Cursor CLI](../cursor/cli.md).
 
-Docs: [installation](https://nomadcxx.github.io/opencode-cursor/docs/getting-started/installation/), [repo](https://github.com/Nomadcxx/opencode-cursor).
+Docs: [opencode-cursor](https://nomadcxx.github.io/opencode-cursor/docs/). Repo: [Nomadcxx/opencode-cursor](https://github.com/Nomadcxx/opencode-cursor).
 
 ## Install
 
