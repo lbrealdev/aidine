@@ -9,3 +9,4 @@ How each harness is installed and how it is actually used.
 - [Goose](goose/README.md)
 - [Hermes](hermes/README.md)
 - [Claude Code](claude-code/README.md)
+- [Grok](grok/README.md)

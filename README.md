@@ -8,7 +8,6 @@ Notes on coding agents, LLMs, and MCP.
 
 ### Agents
 
-- [Agents](agents/README.md)
 - [Cursor](agents/cursor/README.md)
     - [Desktop](agents/cursor/desktop.md)
     - [CLI](agents/cursor/cli.md)
@@ -18,6 +17,9 @@ Notes on coding agents, LLMs, and MCP.
 - [Goose](agents/goose/README.md)
 - [Hermes](agents/hermes/README.md)
 - [Claude Code](agents/claude-code/README.md)
+- [Grok](agents/grok/README.md)
+    - [CLI](agents/grok/cli.md)
+    - [Bot](agents/grok/bot.md)
 
 ### LLM
 
