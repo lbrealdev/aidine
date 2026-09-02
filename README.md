@@ -18,6 +18,7 @@ Notes on coding agents, LLMs, and MCP.
 - [Goose](agents/goose/README.md)
 - [Hermes](agents/hermes/README.md)
 - [Claude Code](agents/claude-code/README.md)
+- [Grok](agents/grok/README.md)
 
 ### LLM
 
