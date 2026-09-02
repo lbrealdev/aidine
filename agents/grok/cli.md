@@ -6,6 +6,8 @@ Sources: [x.ai/cli](https://x.ai/cli), [xai-org/grok-build](https://github.com/x
 
 ## Install
 
+Auxiliary script: [scripts/grok/install-grok-build.sh](../../scripts/grok/install-grok-build.sh) runs the installer below and verifies `grok --version`.
+
 Linux, macOS, Git Bash:
 
 ```shell
@@ -13,7 +15,7 @@ curl -fsSL https://x.ai/cli/install.sh | bash
 grok --version
 ```
 
-That is the official installer. Read `https://x.ai/cli/install.sh` first if you want to see the script.
+That is the official installer. Read `https://x.ai/cli/install.sh` first if you want to see the script. Optional version pin: `curl -fsSL https://x.ai/cli/install.sh | bash -s X.Y.Z`. `install-grok-build.sh [VERSION]` forwards that positional arg.
 
 The compiled artifact is named `xai-grok-pager`; official installs ship it as `grok`. Prebuilt binaries for Linux (also macOS and Windows). Verify with `grok --version` after install — some systems already have an unrelated `grok`.
 

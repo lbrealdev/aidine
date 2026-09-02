@@ -6,6 +6,8 @@ Sources: [x.ai/bot](https://x.ai/bot), [Grok Bot get started](https://docs.x.ai/
 
 Needs an eligible paid plan (SuperGrok Plus/Heavy, Cursor Pro+/Ultra, Cursor Teams Standard/Premium) and a Cursor account. Graphical environment expected; the CLI above is the headless option. Product page download is OS-detect: Linux gets the `.deb`.
 
+Auxiliary script: [scripts/grok/install-grok-bot.sh](../../scripts/grok/install-grok-bot.sh) automates both methods below (APT by default, `--deb` for the direct download).
+
 ### APT (Debian / Ubuntu)
 
 Same GPG key as [Cursor desktop](../cursor/desktop.md). Suite is `grok-bot`, not `stable`.
