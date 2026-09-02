@@ -6,6 +6,8 @@ Sources: [x.ai/cli](https://x.ai/cli), [xai-org/grok-build](https://github.com/x
 
 ## Install
 
+Auxiliary script: [scripts/grok/install-grok-build.sh](../../scripts/grok/install-grok-build.sh) runs the installer below and verifies `grok --version`.
+
 Linux, macOS, Git Bash:
 
 ```shell
