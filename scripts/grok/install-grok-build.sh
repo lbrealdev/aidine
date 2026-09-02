@@ -85,6 +85,7 @@ if command -v grok >/dev/null 2>&1; then
 elif [[ -x "${GROK_BIN_DIR:-$HOME/.grok/bin}/grok" ]]; then
   "${GROK_BIN_DIR:-$HOME/.grok/bin}/grok" --version
 else
+  # shellcheck disable=SC2016  # single quotes intentional: show $HOME literally as a copy-paste instruction
   die 'grok not found after install — restart the terminal or `export PATH="$HOME/.grok/bin:$PATH"` (see agents/grok/cli.md)'
 fi
 
