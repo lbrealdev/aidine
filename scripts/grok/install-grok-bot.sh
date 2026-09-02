@@ -55,6 +55,10 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+if [[ ! "$GROK_BOT_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[A-Za-z0-9.]+)?$ ]]; then
+  die "GROK_BOT_VERSION must be X.Y.Z[-suffix], got: $GROK_BOT_VERSION"
+fi
+
 if [[ ! -f /etc/os-release ]]; then
   die "Grok Bot Linux package is Debian/Ubuntu-only (see agents/grok/bot.md)"
 fi
@@ -171,7 +175,7 @@ else
   echo "Installing APT keyring and grok-bot suite ..."
   "${SUDO[@]}" install -d -m 0755 /etc/apt/keyrings
   curl -fsSL "$KEY_URL" | gpg --dearmor | "${SUDO[@]}" tee "$KEYRING" >/dev/null
-  echo "deb [arch=amd64,arm64 signed-by=/etc/apt/keyrings/cursor.gpg] https://downloads.cursor.com/aptrepo grok-bot main" \
+  echo "deb [arch=amd64,arm64 signed-by=${KEYRING}] ${REPO_URL} ${SUITE} main" \
     | "${SUDO[@]}" tee "$LIST_FILE" >/dev/null
   "${SUDO[@]}" apt update
   "${SUDO[@]}" apt install -y grok-bot
