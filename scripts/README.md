@@ -37,16 +37,3 @@ Installs the `grok-bot` package. Default is the APT repo method; `--deb` downloa
 `--help` prints usage and exits.
 
 Docs: [agents/grok/bot.md](../agents/grok/bot.md).
-
-## Conventions
-
-Each script:
-
-- bash (`#!/usr/bin/env bash`, `set -euo pipefail`)
-- executable mode
-- `--help`
-- no committed credentials
-- sudo only where needed
-- idempotent-ish — reinstall/upgrade safe
-
-Source of truth for what they automate: [agents/grok/cli.md](../agents/grok/cli.md), [agents/grok/bot.md](../agents/grok/bot.md).
