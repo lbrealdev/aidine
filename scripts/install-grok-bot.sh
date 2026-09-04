@@ -7,6 +7,8 @@ REPO_URL="https://downloads.cursor.com/aptrepo"
 SUITE="grok-bot"
 KEYRING="/etc/apt/keyrings/cursor.gpg"
 LIST_FILE="/etc/apt/sources.list.d/grok-bot.list"
+PACKAGE_SOURCES="/etc/apt/sources.list.d/grok-bot.sources"
+PACKAGE_KEYRING="/usr/share/keyrings/grok-bot.gpg"
 PINNED_VERSION="0.30.0"
 SHA256_AMD64="fb888b2204c8a51c71a9f5f9a2913ac10561f3ef6939c1245ecae4e837d4ada2"
 SHA256_ARM64="7c4c81d576181a57b34b812258b2620626717cec84f100503a7363f37aa8e3fe"
@@ -140,6 +142,155 @@ sha256_from_packages() {
   ' "$packages_file"
 }
 
+# Match URI https://downloads.cursor.com/aptrepo (optional trailing /) + suite grok-bot.
+scan_list_signed_by() {
+  awk -v repo="$REPO_URL" -v suite="$SUITE" '
+    BEGIN { sub(/\/+$/, "", repo) }
+    /^[[:space:]]*#/ { next }
+    /^[[:space:]]*$/ { next }
+    {
+      line = $0
+      sub(/^[[:space:]]+/, "", line)
+      if (line !~ /^deb[[:space:]]/) next
+      rest = line
+      sub(/^deb[[:space:]]+/, "", rest)
+      opts = ""
+      if (rest ~ /^\[/) {
+        if (!match(rest, /^\[[^\]]*\][[:space:]]+/)) next
+        opts = substr(rest, 2, index(rest, "]") - 2)
+        rest = substr(rest, RSTART + RLENGTH)
+      }
+      n = split(rest, a, /[[:space:]]+/)
+      if (n < 2) next
+      uri = a[1]
+      su = a[2]
+      sub(/\/+$/, "", uri)
+      if (uri != repo || su != suite) next
+      signed = ""
+      if (match(opts, /[Ss]igned-[Bb]y=/)) {
+        signed = substr(opts, RSTART + RLENGTH)
+        sub(/[[:space:]].*/, "", signed)
+      }
+      print signed
+      found = 1
+      exit
+    }
+    END { if (!found) exit 1 }
+  ' "$1"
+}
+
+scan_sources_field() {
+  local field="$2"
+  awk -v repo="$REPO_URL" -v suite="$SUITE" -v field="$field" '
+    BEGIN { RS = ""; FS = "\n"; sub(/\/+$/, "", repo) }
+    {
+      uris = ""; suites = ""; signed = ""; enabled = ""
+      for (i = 1; i <= NF; i++) {
+        if ($i ~ /^[[:space:]]*#/) continue
+        if ($i ~ /^[Uu][Rr][Ii][Ss]:[[:space:]]*/) {
+          uris = $i; sub(/^[^:]+:[[:space:]]*/, "", uris)
+        } else if ($i ~ /^[Ss][Uu][Ii][Tt][Ee][Ss]:[[:space:]]*/) {
+          suites = $i; sub(/^[^:]+:[[:space:]]*/, "", suites)
+        } else if ($i ~ /^[Ss]igned-[Bb]y:[[:space:]]*/) {
+          signed = $i; sub(/^[^:]+:[[:space:]]*/, "", signed)
+        } else if ($i ~ /^[Ee]nabled:[[:space:]]*/) {
+          enabled = $i; sub(/^[^:]+:[[:space:]]*/, "", enabled)
+        }
+      }
+      uri_ok = 0
+      n = split(uris, u, /[[:space:]]+/)
+      for (j = 1; j <= n; j++) {
+        x = u[j]; sub(/\/+$/, "", x)
+        if (x == repo) uri_ok = 1
+      }
+      suite_ok = 0
+      n = split(suites, s, /[[:space:]]+/)
+      for (j = 1; j <= n; j++) {
+        if (s[j] == suite) suite_ok = 1
+      }
+      if (uri_ok && suite_ok) {
+        if (field == "enabled") print enabled
+        else print signed
+        found = 1
+        exit
+      }
+    }
+    END { if (!found) exit 1 }
+  ' "$1"
+}
+
+scan_grok_bot_apt_sources() {
+  MATCH_FILES=()
+  MATCH_SIGNED_BY=()
+  local f out
+  local files=()
+  [[ -r /etc/apt/sources.list ]] && files+=(/etc/apt/sources.list)
+  for f in /etc/apt/sources.list.d/*.list /etc/apt/sources.list.d/*.sources; do
+    [[ -r "$f" ]] && files+=("$f")
+  done
+  for f in "${files[@]}"; do
+    out=""
+    case "$f" in
+      *.sources)
+        if out="$(scan_sources_field "$f" signed)"; then
+          MATCH_FILES+=("$f")
+          MATCH_SIGNED_BY+=("$out")
+        fi
+        ;;
+      *.list|/etc/apt/sources.list)
+        if out="$(scan_list_signed_by "$f")"; then
+          MATCH_FILES+=("$f")
+          MATCH_SIGNED_BY+=("$out")
+        fi
+        ;;
+    esac
+  done
+}
+
+report_signed_by_matches() {
+  local i
+  [[ ${#MATCH_FILES[@]} -eq 0 ]] && return 0
+  for i in "${!MATCH_FILES[@]}"; do
+    echo "  ${MATCH_FILES[$i]}  Signed-By=${MATCH_SIGNED_BY[$i]}" >&2
+  done
+}
+
+# True if an unknown file targets this URI+suite with a different Signed-By.
+other_signed_by_conflict() {
+  local i f sb reference=""
+  if [[ -f "$PACKAGE_SOURCES" ]]; then
+    if [[ ${#MATCH_FILES[@]} -gt 0 ]]; then
+      for i in "${!MATCH_FILES[@]}"; do
+        if [[ "${MATCH_FILES[$i]}" == "$PACKAGE_SOURCES" ]]; then
+          reference="${MATCH_SIGNED_BY[$i]}"
+          break
+        fi
+      done
+    fi
+  else
+    reference="$KEYRING"
+  fi
+  [[ ${#MATCH_FILES[@]} -eq 0 ]] && return 1
+  for i in "${!MATCH_FILES[@]}"; do
+    f="${MATCH_FILES[$i]}"
+    sb="${MATCH_SIGNED_BY[$i]}"
+    if [[ "$f" == "$LIST_FILE" || "$f" == "$PACKAGE_SOURCES" ]]; then
+      continue
+    fi
+    if [[ "$sb" != "$reference" ]]; then
+      return 0
+    fi
+  done
+  return 1
+}
+
+package_sources_is_disabled() {
+  local enabled=""
+  [[ -f "$PACKAGE_SOURCES" ]] || return 1
+  enabled="$(scan_sources_field "$PACKAGE_SOURCES" enabled)" || return 1
+  [[ "${enabled,,}" == "no" ]]
+}
+
 if [[ "$USE_DEB" -eq 1 ]]; then
   tmp="$(mktemp -d)"
   trap 'rm -rf "$tmp"' EXIT
@@ -172,13 +323,37 @@ if [[ "$USE_DEB" -eq 1 ]]; then
   "${SUDO[@]}" dpkg -i "${tmp}/grok-bot.deb"
   "${SUDO[@]}" apt-get install -f -y
 else
-  echo "Installing APT keyring and grok-bot suite ..."
-  "${SUDO[@]}" install -d -m 0755 /etc/apt/keyrings
-  curl -fsSL "$KEY_URL" | gpg --dearmor | "${SUDO[@]}" tee "$KEYRING" >/dev/null
-  echo "deb [arch=amd64,arm64 signed-by=${KEYRING}] ${REPO_URL} ${SUITE} main" \
-    | "${SUDO[@]}" tee "$LIST_FILE" >/dev/null
+  scan_grok_bot_apt_sources
+  if other_signed_by_conflict; then
+    echo "error: conflicting Signed-By for ${REPO_URL} suite ${SUITE}:" >&2
+    report_signed_by_matches
+    exit 1
+  fi
+
+  if [[ -f "$PACKAGE_SOURCES" ]]; then
+    if package_sources_is_disabled; then
+      die "${PACKAGE_SOURCES} has Enabled: no; re-enable it or use --deb"
+    fi
+    echo "Using package APT source ${PACKAGE_SOURCES} ..."
+    "${SUDO[@]}" rm -f "$LIST_FILE"
+    if [[ ! -f "$PACKAGE_KEYRING" ]]; then
+      echo "Restoring ${PACKAGE_KEYRING} ..."
+      "${SUDO[@]}" install -d -m 0755 /usr/share/keyrings
+      curl -fsSL "$KEY_URL" | gpg --dearmor | "${SUDO[@]}" tee "$PACKAGE_KEYRING" >/dev/null
+    fi
+  else
+    echo "Installing APT keyring and grok-bot suite ..."
+    "${SUDO[@]}" install -d -m 0755 /etc/apt/keyrings
+    curl -fsSL "$KEY_URL" | gpg --dearmor | "${SUDO[@]}" tee "$KEYRING" >/dev/null
+    echo "deb [arch=amd64,arm64 signed-by=${KEYRING}] ${REPO_URL} ${SUITE} main" \
+      | "${SUDO[@]}" tee "$LIST_FILE" >/dev/null
+  fi
+
   "${SUDO[@]}" apt update
   "${SUDO[@]}" apt install -y grok-bot
+  if [[ -f "$PACKAGE_SOURCES" ]]; then
+    "${SUDO[@]}" rm -f "$LIST_FILE"
+  fi
 fi
 
 if ! dpkg-query -W grok-bot; then
