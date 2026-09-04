@@ -24,6 +24,16 @@ sudo apt update
 sudo apt install grok-bot
 ```
 
+Package postinst registers `/etc/apt/sources.list.d/grok-bot.sources` and `/usr/share/keyrings/grok-bot.gpg` on install/upgrade. Leaving `grok-bot.list` beside it breaks `apt update` (`Signed-By` conflict). The script removes `.list` after install.
+
+```shell
+ls -l /etc/apt/sources.list.d/grok-bot.list /etc/apt/sources.list.d/grok-bot.sources /usr/share/keyrings/grok-bot.gpg /etc/apt/keyrings/cursor.gpg
+sudo rm -f /etc/apt/sources.list.d/grok-bot.list
+sudo apt update
+```
+
+If `.sources` is missing, keep `.list`. Do not delete `cursor.gpg`, `cursor.list`, or `cursor.sources`.
+
 ### Direct `.deb`
 
 ```shell
