@@ -10,3 +10,6 @@ How each harness is installed and how it is actually used.
 - [Hermes](hermes/README.md)
 - [Claude Code](claude-code/README.md)
 - [Grok](grok/README.md)
+- [Jcode](jcode/README.md)
+    - [Core](jcode/core.md)
+    - [Desktop](jcode/desktop.md)
