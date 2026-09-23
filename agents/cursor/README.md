@@ -16,6 +16,7 @@ Docs call the CLI `agent`. The installer also creates a `cursor-agent` symlink. 
 ## Also
 
 - [Origin](origin.md) — Cursor's git host. Different binary from the agent.
+- [Gentle-AI](../../harness/gentle-ai.md) — optional harness around Cursor (memory, ODD/SDD, RDD).
 
 OpenCode can call `cursor-agent` through the [open-cursor](../opencode/open-cursor.md) plugin.
 
