@@ -29,6 +29,12 @@ Notes on coding agents, LLMs, and MCP.
 
 - [MCP](mcp/README.md)
 
+### Harness
+
+- [Harness](harness/README.md)
+    - [Gentle-AI](harness/gentle-ai.md)
+    - [Gentle Shell](harness/gentle-shell.md)
+
 ## Working
 
 Issue, branch, PR. See [CONTRIBUTING.md](CONTRIBUTING.md).
