@@ -20,6 +20,9 @@ Notes on coding agents, LLMs, and MCP.
 - [Grok](agents/grok/README.md)
     - [CLI](agents/grok/cli.md)
     - [Bot](agents/grok/bot.md)
+- [Jcode](agents/jcode/README.md)
+    - [Core](agents/jcode/core.md)
+    - [Desktop](agents/jcode/desktop.md)
 
 ### LLM
 
