@@ -5,5 +5,6 @@ Typed decision models. A call returns a `choice`, a `score`, or `noul`, each wit
 ## In this section
 
 - [Jev](jev.md)
+- [Laya](laya.md)
 
-Later: Laya (#20), NanoJev (#21), CUA-S1 (#22), OpenClaw decision role (#23).
+Later: NanoJev (#21), CUA-S1 (#22), OpenClaw decision role (#23).
