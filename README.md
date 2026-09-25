@@ -37,6 +37,7 @@ Notes on coding agents, LLMs, and MCP.
 - [Harness](harness/README.md)
     - [Gentle-AI](harness/gentle-ai.md)
     - [Gentle Shell](harness/gentle-shell.md)
+    - [DeepSeek Harness](harness/deepseek-harness.md)
 
 ## Working
 
