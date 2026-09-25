@@ -20,8 +20,6 @@ Separate Hub repos:
 - [`convaiinnovations/laya-multilingual`](https://huggingface.co/convaiinnovations/laya-multilingual) — mmBERT-base, 322M, context 1024, up to 8192 with `max_len=8192`
 - [`convaiinnovations/laya-typed-decisions`](https://huggingface.co/convaiinnovations/laya-typed-decisions) — ModernBERT-large, 421M, context 1024, specialist workflows
 
-Hub download: [convaiinnovations/laya](https://huggingface.co/convaiinnovations/laya).
-
 ## Router
 
 Router is the entry point.
