@@ -23,6 +23,10 @@ Notes on coding agents, LLMs, and MCP.
 - [Jcode](agents/jcode/README.md)
     - [Core](agents/jcode/core.md)
     - [Desktop](agents/jcode/desktop.md)
+- [Buzz](agents/buzz/README.md)
+    - [Desktop](agents/buzz/desktop.md)
+    - [Relay](agents/buzz/relay.md)
+    - [CLI](agents/buzz/cli.md)
 
 ### LLM
 
