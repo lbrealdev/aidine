@@ -27,6 +27,8 @@ Notes on coding agents, LLMs, and MCP.
 ### LLM
 
 - [LLM](llm/README.md)
+    - [Decisions](llm/decisions/README.md)
+        - [Jev](llm/decisions/jev.md)
 
 ### MCP
 
