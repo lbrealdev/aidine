@@ -27,6 +27,7 @@ Notes on coding agents, LLMs, and MCP.
 ### LLM
 
 - [LLM](llm/README.md)
+    - [Hugging Face](llm/huggingface/README.md)
 
 ### MCP
 
