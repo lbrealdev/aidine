@@ -10,10 +10,12 @@ Upstream: [deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek
 
 ## Install
 
-`npx` needs Node.js. A local launch starts the Web UI at `http://127.0.0.1:3080` and opens a browser. `--no-open` skips the browser. An SSH launch prints the URL only.
+`npx` needs Node. No `dsh` package in the mise registry. `node` and `pnpm` are. Upstream `package.json` engines: Node `^22.19.0 || >=24.0.0`, pnpm `11.7.0`.
+
+A local launch starts the Web UI at `http://127.0.0.1:3080` and opens a browser. `--no-open` skips the browser. An SSH launch prints the URL only.
 
 ```shell
-npx @deepseek-ai/dsh web
+mise x node@24 -- npx @deepseek-ai/dsh web
 ```
 
 From source:
@@ -21,9 +23,9 @@ From source:
 ```shell
 git clone https://github.com/deepseek-ai/deepseek-harness.git
 cd deepseek-harness
-pnpm install
-pnpm run build
-pnpm dsh web
+mise x node@24 pnpm@11.7.0 -- pnpm install
+mise x node@24 pnpm@11.7.0 -- pnpm run build
+mise x node@24 pnpm@11.7.0 -- pnpm dsh web
 ```
 
 ## Developer preview
@@ -38,7 +40,7 @@ Not a daily-driver step. Use a VM or container you can throw away.
 2. Run:
 
 ```shell
-npx @deepseek-ai/dsh web
+mise x node@24 -- npx @deepseek-ai/dsh web
 ```
 
 3. Expect the Web UI on port 3080.
