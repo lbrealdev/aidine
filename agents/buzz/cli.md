@@ -6,10 +6,10 @@ Source: [crates/buzz-cli/README.md](https://github.com/block/buzz/blob/main/crat
 
 ## Install
 
-From a Buzz checkout:
+From a Buzz checkout. `rust` is in the mise registry; `cargo` comes with it.
 
 ```shell
-cargo install --path crates/buzz-cli
+mise x rust -- cargo install --path crates/buzz-cli
 ```
 
 ## Auth
@@ -41,13 +41,13 @@ export BUZZ_RELAY_URL="https://relay.example.com"
 `buzz-acp` listens for mentions on the relay and drives an ACP agent over stdio. Covers Goose, Codex (via [codex-acp](https://github.com/agentclientprotocol/codex-acp)), and Claude Code (via [claude-agent-acp](https://github.com/agentclientprotocol/claude-agent-acp)).
 
 ```shell
-cargo build --release -p buzz-acp
+mise x rust -- cargo build --release -p buzz-acp
 ```
 
 Keys via `buzz-admin` (prints hex; save the secret — it is not stored):
 
 ```shell
-cargo run -p buzz-admin -- generate-key
+mise x rust -- cargo run -p buzz-admin -- generate-key
 ```
 
 Goose quickstart, as the buzz-acp README writes it (`ws://`, not the CLI README default):

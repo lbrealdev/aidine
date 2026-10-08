@@ -13,6 +13,12 @@ just dev
 
 `just dev` starts the relay and the desktop app. Relay on `ws://localhost:3000`.
 
+Hermit is not in the mise registry. Without it, use mise: `rust`, `node`, `pnpm`, and `just`. `cargo` comes with `rust`.
+
+```shell
+mise x rust@1.88 node@24 pnpm@10 just -- sh -c 'just setup && just build && just dev'
+```
+
 VPS: production Compose bundle in [`deploy/compose/`](https://github.com/block/buzz/tree/main/deploy/compose).
 
 Hosted: [Deploy on Railway](https://railway.com/deploy/buzz-relay-block). Write-up: [Run your own Buzz relay](https://engineering.block.xyz/blog/run-your-own-buzz-relay).
