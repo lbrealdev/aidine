@@ -8,3 +8,4 @@ Agent install and day-to-day use stay under [agents/](../agents/README.md). This
 
 - [Gentle-AI](gentle-ai.md) — memory, ODD/SDD, RDD review across many agents
 - [Gentle Shell](gentle-shell.md) — Pi-native workspace UI (npm package still `gentle-pi`)
+- [DeepSeek Harness](deepseek-harness.md) — open-source `dsh`; everything-is-a-plugin on Cordis
