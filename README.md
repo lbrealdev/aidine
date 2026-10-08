@@ -36,6 +36,7 @@ Notes on coding agents, LLMs, and MCP.
     - [Decisions](llm/decisions/README.md)
         - [Jev](llm/decisions/jev.md)
         - [Laya](llm/decisions/laya.md)
+    - [Hugging Face](llm/huggingface/README.md)
 
 ### MCP
 
