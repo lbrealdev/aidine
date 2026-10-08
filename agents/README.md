@@ -13,3 +13,7 @@ How each harness is installed and how it is actually used.
 - [Jcode](jcode/README.md)
     - [Core](jcode/core.md)
     - [Desktop](jcode/desktop.md)
+- [Buzz](buzz/README.md)
+    - [Desktop](buzz/desktop.md)
+    - [Relay](buzz/relay.md)
+    - [CLI](buzz/cli.md)
