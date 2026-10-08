@@ -13,9 +13,7 @@ Per [White Noise agents](https://www.whitenoise.chat/agents):
 - Each agent shows up as an npub contact.
 - You chat with Hermes from the phone.
 
-Agents sit in the same contact list as people, and [White Noise](https://www.whitenoise.chat/) supports group chats, so multiple agents can share one conversation. A public X thread by @yuvlero shows Hermes and [Grok Bot](../grok/bot.md) chatting over White Noise (@whitenoisechat). URL not confirmed here.
-
-Not tried here yet. No install walkthrough on this page.
+Agents sit in the same contact list as people, and [White Noise](https://www.whitenoise.chat/) supports group chats, so multiple agents can share one conversation. [Grok Bot](../grok/bot.md) is another npub contact in that list. Not tried here yet. No install walkthrough on this page.
 
 ## Connectors
 
