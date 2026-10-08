@@ -7,3 +7,7 @@ Install and usage notes as they land.
 ## Plugins
 
 - [open-cursor](open-cursor.md) — Cursor models inside OpenCode, via `cursor-agent` ([docs](https://nomadcxx.github.io/opencode-cursor/docs/))
+
+## Related
+
+- [OpenTunnel](opentunnel.md) — public `*.opentunnel.xyz` URLs for a local app (CLI and SDK; not an OpenCode plugin)
