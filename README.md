@@ -14,6 +14,7 @@ Notes on coding agents, LLMs, and MCP.
     - [Origin](agents/cursor/origin.md)
 - [OpenCode](agents/opencode/README.md)
     - [open-cursor](agents/opencode/open-cursor.md)
+    - [OpenTunnel](agents/opencode/opentunnel.md)
 - [Goose](agents/goose/README.md)
 - [Hermes](agents/hermes/README.md)
 - [Claude Code](agents/claude-code/README.md)

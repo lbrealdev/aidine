@@ -16,13 +16,22 @@ From the [privacy section](https://opentunnel.xyz/):
 - Route names are private (wildcard cert) but guessable. Do not treat them as auth.
 - Put authentication in the service itself.
 
+The [repo](https://github.com/anomalyco/opentunnel) says inbound TCP is still on temporary AWS relays until Cloudflare Spectrum with TLS passthrough. The private key stays on the client either way.
+
 ## OpenCode
 
 [@thdxr](https://x.com/thdxr/status/2107956848318177622) announced OpenCode integration as coming. The [site](https://opentunnel.xyz/) already shows OpenCode as an example local target.
 
 ## Install entry points
 
-Named only; not tried here yet. No walkthrough on this page.
+Not tried here. No `opentunnel` entry in the mise registry. `rust` and `node` are. From the [repo](https://github.com/anomalyco/opentunnel):
 
-- Install script: `https://opentunnel.xyz/install` ([site](https://opentunnel.xyz/), [repo](https://github.com/anomalyco/opentunnel))
-- SDK package: [`@opentunnel/client`](https://github.com/anomalyco/opentunnel) (`packages/client`)
+```shell
+curl -fsSL https://opentunnel.xyz/install | sh
+mise x node -- npm install -g opentunnel
+mise x rust -- cargo install opentunnel-cli
+```
+
+Also `brew install anomalyco/tap/opentunnel` and the AUR package `opentunnel-bin`. Prebuilt binaries are on the GitHub releases.
+
+SDK: [`@opentunnel/client`](https://github.com/anomalyco/opentunnel) (`packages/client`). The npm name `opentunnel` is the CLI launcher (`packages/cli`).
