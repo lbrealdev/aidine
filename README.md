@@ -16,6 +16,7 @@ Notes on coding agents, LLMs, and MCP.
     - [open-cursor](agents/opencode/open-cursor.md)
 - [Goose](agents/goose/README.md)
 - [Hermes](agents/hermes/README.md)
+    - [White Noise](agents/hermes/white-noise.md)
 - [Claude Code](agents/claude-code/README.md)
 - [Grok](agents/grok/README.md)
     - [CLI](agents/grok/cli.md)

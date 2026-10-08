@@ -15,3 +15,4 @@ xAI has two agent surfaces. Both install on Linux.
 - [x.ai/bot](https://x.ai/bot)
 - [Grok Bot get started](https://docs.x.ai/grok-bot/get-started)
 - [aptrepo](https://downloads.cursor.com/aptrepo)
+- [Hermes / White Noise](../hermes/white-noise.md): Grok Bot and Hermes chatting over White Noise
