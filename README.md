@@ -41,6 +41,7 @@ Notes on coding agents, LLMs, and MCP.
 ### MCP
 
 - [MCP](mcp/README.md)
+    - [REA Android APK](mcp/rea-android-apk.md)
 
 ### Harness
 

@@ -1,3 +1,5 @@
 # MCP
 
 Model Context Protocol: servers, clients, and how they plug into a harness. Notes as they land.
+
+- [REA Android APK](rea-android-apk.md)
